@@ -1,0 +1,42 @@
+**Behind the Scenes: What Happens When You Type a URL in Your Browser?**
+Have you ever wondered what happens in the blink of an eye when you type a URL like “https://www.google.com" in your browser and press Enter? It might seem like magic, but there’s a fascinating sequence of events happening behind the scenes to bring that website to your screen. Let’s delve into the journey:
+
+1. DNS Lookup: Translating Names to Numbers
+
+The internet relies on numerical addresses (IP addresses) to locate specific computers. However, we humans prefer friendly names like “google.com.” This is where the Domain Name System (DNS) comes in. It acts like a giant phonebook for the internet, translating the domain name you entered into the corresponding IP address. Your browser sends a DNS request to a DNS server, which retrieves the IP address for Google and relays it back.
+
+2. TCP/IP: The Language of Communication
+
+With the IP address in hand, your browser initiates communication with the Google server using the Transmission Control Protocol/Internet Protocol (TCP/IP). TCP is responsible for establishing a reliable connection, ensuring the data arrives in the correct order and without errors. IP handles the actual routing of the data packets across the internet.
+
+3. Firewall: Guardian of the Gates
+
+Before reaching the Google server, the data packets might pass through a firewall, a security system that acts as a gatekeeper. It filters incoming and outgoing traffic based on pre-defined rules, ensuring only authorized data reaches the server.
+
+4. HTTPS/SSL: Encryption for a Secure Journey
+
+Notice the “https” at the beginning of the URL? This indicates the use of Hypertext Transfer Protocol Secure (HTTPS) with Secure Sockets Layer (SSL) encryption. HTTPS scrambles the data being exchanged between your browser and the server, protecting it from eavesdropping or tampering.
+
+5. Load Balancer: Distributing the Load
+
+Large websites like Google often employ load balancers. These act like traffic directors, distributing incoming requests across multiple web servers to ensure optimal performance and prevent overloading any single server.
+
+6. Web Server: Delivering the Goods
+
+The web server receives the request and retrieves the necessary files to build the webpage you requested. This might involve fetching HTML, CSS, JavaScript, and images from various locations on the server.
+
+7. Application Server (Optional): Dynamic Content Delivery
+
+Some websites utilize application servers behind the scenes. These servers handle dynamic content generation, like processing user logins or displaying personalized content. They interact with databases to retrieve or store information.
+
+8. Database (Optional): The Information Powerhouse
+
+Databases store the website’s dynamic data, like user accounts, product information, or blog posts. The application server might interact with the database to retrieve or update this information as needed.
+
+9. Putting it All Together: Rendering the Webpage
+
+Finally, all the retrieved files (HTML, CSS, JavaScript, images) arrive at your browser. The browser interprets the HTML code, fetches and applies the CSS styles, and executes any JavaScript to render the complete webpage you see on your screen.
+
+The Grand Finale: Your Requested Webpage Appears!
+
+This entire process happens in milliseconds, giving you the illusion of instant access to the website. The next time you browse the web, remember the complex dance happening behind the scenes to bring you the information you seek!
