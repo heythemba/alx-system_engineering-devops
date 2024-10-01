@@ -8,14 +8,14 @@ After rolling out a new feature to our recently launched Node.js platform, we en
 
 ## Timeline
 
-+08-10-2024 9:45 AM GMT+1 - First user complaint arrives, reporting login and registration issues.
-+08-10-2024 10:05 AM GMT+1 - Aria, one of our backend engineers, reproduces the same error locally.
-+08-10-2024 10:20 AM GMT+1 - Initial checks focused on API routes and authentication flow.
-+08-10-2024 10:30 AM GMT+1 - We hypothesized that a misconfiguration in the OAuth provider's setup could be the issue, but it was ruled out.
-+08-10-2024 10:35 AM GMT+1 - Focus shifted to session handling middleware after noticing token generation issues in the error logs.
-+08-10-2024 10:45 AM GMT+1 - The team narrowed down the issue to an outdated version of the jsonwebtoken package, which failed to validate user tokens correctly.
-+08-10-2024 11:00 AM GMT+1 - The issue was escalated to the full backend team.
-+08-10-2024 11:10 AM GMT+1 - The problem was resolved by upgrading the jsonwebtoken package version and redeploying the platform.
+* 08-10-2024 9:45 AM GMT+1 - First user complaint arrives, reporting login and registration issues.
+* 08-10-2024 10:05 AM GMT+1 - Aria, one of our backend engineers, reproduces the same error locally.
+* 08-10-2024 10:20 AM GMT+1 - Initial checks focused on API routes and authentication flow.
+* 08-10-2024 10:30 AM GMT+1 - We hypothesized that a misconfiguration in the OAuth provider's setup could be the issue, but it was ruled out.
+* 08-10-2024 10:35 AM GMT+1 - Focus shifted to session handling middleware after noticing token generation issues in the error logs.
+* 08-10-2024 10:45 AM GMT+1 - The team narrowed down the issue to an outdated version of the jsonwebtoken package, which failed to validate user tokens correctly.
+* 08-10-2024 11:00 AM GMT+1 - The issue was escalated to the full backend team.
+* 08-10-2024 11:10 AM GMT+1 - The problem was resolved by upgrading the jsonwebtoken package version and redeploying the platform.
 
 ## Root Cause And Resolution
 
