@@ -1,29 +1,28 @@
 # Postmortem
 
-![Flogging a dead horse](post-mortem-meetings.jpg)
+![Post-mortem meeting](https://i.redd.it/e1fvfqdxncr61.png)
 
 ## Issue Summary
 
-We had just released a new feature to our recently launched Ruby on Rails site that we had our first intake of users complaining about the site. 5 minutes after we performed a feature update, we started receiving emails from our users talking about "they can't sign in or sign up to our platform". It was quite surprising to us because we knew it worked on our machines and it worked before. About 127 of such emails came to our inbox. It was an avalanche of emails. Knowing how hard it can be to attract and keep users, we couldn't afford to lose 127 of our users in that way and decided to take a closer look at the problem. We cloned our site's repository from GitBug, followed the installation instructions on the README and to our surprise the site couldn't startup. It wasn't long before we realized that the cause of the problem was failing to update the requirements for our project. The site was malfunctioning from 9:55 AM GMT+1 to 11:20 AM GMT+1.
+After rolling out a new feature to our recently launched Node.js platform, we encountered our first major issue with users reporting problems. Five minutes after the deployment, we started receiving a surge of emails from users saying, "they can't log in or create accounts on the platform." This was unexpected because everything worked fine in our development environment and during previous tests. In total, 150 emails flooded our support inbox, making it clear that the issue was widespread. Given how crucial early users are to a platform, we immediately began investigating. After pulling down the repository from GitHub and following the documented setup steps, we were unable to start the site locally. The root cause became evident: a missing update in one of the project's dependencies. The site remained down from 9:45 AM GMT+1 to 11:10 AM GMT+1.
 
 ## Timeline
 
-+ 05-02-2022 9:55 AM GMT+1 - A customer complained that they couldn't sign in to the site.
-+ 05-02-2022 10:20 AM GMT+1 - Winus, one of our backend developers, experienced the same issues our customers reported.
-+ 05-02-2022 10:35 AM GMT+1 - We investigated the controllers and the views for inconsistencies.
-+ 05-02-2022 10:40 AM GMT+1 - We assumed the bcrypt (one of our site's dependencies) gem being used was either at fault or used incorrectly because the error message on the site showed that the bcrypt gem was raising an error over an invalid hash.
-+ 05-02-2022 10:42 AM GMT+1 - We checked that the views might not be binding the form fields to the right model fields, which later turned out to be false.
-+ 05-02-2022 10:45 AM GMT+1 - We were misled by thinking that our controllers might be creating a different hash for a valid password of the site's admin.
-+ 05-02-2022 10:50 AM GMT+1 - Winus thought the issue might have been that the password was not properly hashed.
-+ 05-02-2022 11:00 AM GMT+1 - The incident was escalated to the backend development team.
-+ 05-02-2022 11:20 AM GMT+1 - The incident was resolved by updating the requirements (the bcrypt gem version) for the backend server.
++08-10-2024 9:45 AM GMT+1 - First user complaint arrives, reporting login and registration issues.
++08-10-2024 10:05 AM GMT+1 - Aria, one of our backend engineers, reproduces the same error locally.
++08-10-2024 10:20 AM GMT+1 - Initial checks focused on API routes and authentication flow.
++08-10-2024 10:30 AM GMT+1 - We hypothesized that a misconfiguration in the OAuth provider's setup could be the issue, but it was ruled out.
++08-10-2024 10:35 AM GMT+1 - Focus shifted to session handling middleware after noticing token generation issues in the error logs.
++08-10-2024 10:45 AM GMT+1 - The team narrowed down the issue to an outdated version of the jsonwebtoken package, which failed to validate user tokens correctly.
++08-10-2024 11:00 AM GMT+1 - The issue was escalated to the full backend team.
++08-10-2024 11:10 AM GMT+1 - The problem was resolved by upgrading the jsonwebtoken package version and redeploying the platform.
 
 ## Root Cause And Resolution
 
-The version of the bcrypt gem we used was outdated. It was raising an error over a hash that was clearly valid and matched what was stored in the database. It could be that the hash we were creating was not supported by the version of bcrypt we had installed. Winus fixed the issue by manually updating the version of bcrypt in the Gemfile.lock file to a more recent version and reinstalling the required gems, and it worked like a charm.
+The issue stemmed from an outdated version of the jsonwebtoken package used to handle token authentication. The old version was unable to validate tokens correctly, leading to login and signup failures. Aria resolved the issue by updating the jsonwebtoken package to the latest stable version in the package.json file and reinstalling the dependencies. The site functioned properly after the update, and users were able to log in and register without further issues.
 
 ## Corrective And Preventative Measures
 
-+ Setup a continuous integration pipeline to run a build on each pull request branch. This would ensure that builds are passing in the pull request branch before it is merged with the deployment branch.
-+ Setup a monitoring system for the database and application servers to keep track of any issue that may occur.
-+ Develop tests that need to be passed for each new feature and those tests should be passing before they are merged with the deployment branch.
+* Implement automated dependency checking tools to alert us when core packages are outdated.
+* Improve test coverage specifically around critical flows like login and registration, ensuring they are part of our continuous integration pipeline.
+* Set up real-time monitoring for login and signup success rates, with immediate alerts for any significant drop in performance.
